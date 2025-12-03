@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bb
+  labels:
+    app: bb
+    service: bb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bb
+      service: bb
+  template:
+    metadata:
+      labels:
+        app: bb
+        service: bb
+    spec:
+      volumes:
+      - name: bb-volume
+        persistentVolumeClaim:
+          claimName: bb
+      containers:
+      - name: bb-container
+        image: hhana982/bb:1.<version>
+        ports:
+        - containerPort: 5000
+        volumeMounts:
+        - mountPath: "/"
+          name: bb-volume
+        env: 
